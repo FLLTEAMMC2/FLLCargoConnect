@@ -59,18 +59,6 @@ def Monitor():
         Solution_1()
       elif solution == 3: # run solution 2
         Solution_3()
+        # Add the rest of the solutions
       else :
         #default solution, what to do if a solution number is not implemented above?
-      
-      # Add the rest of the solutions
-
-    
-    
-
-
-
-
-
-
-
-wait(3000)
