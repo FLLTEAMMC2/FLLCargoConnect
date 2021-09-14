@@ -5,6 +5,9 @@ from pybricks.geometry import Axis
 from pybricks.pupdevices import Motor, ColorSensor
 from pybricks.robotics import DriveBase
 import utility
+
+# When a new solution is made, make a solution file, such as solution_1.py, solution_2.py. 
+# Add all solutions to the list here so that the solution function can be called, such as solution_1()
 import solution_1
 import solution_2
 
