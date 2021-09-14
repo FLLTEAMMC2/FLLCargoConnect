@@ -10,8 +10,67 @@ import utility
 # STATE 1 Initialize global variables
 Robot = PrimeHub()
 
-utility.MoveStraight()
+# Define number of solution slots
+NumberOfSolutions = 15
 
+# Selection number to run solution
+solution = 0
+
+# Set bluetooth button to stop button. Check out beta.pybricks.com for some examples.
 
 # STATE 2 Start monitor loop
-# Check for button presses, increment selection number, start selection program
+# Check for button presses, increment selection number, start solution program
+
+# Start monitor function
+Monitor()
+
+# Monitor function definition
+def Monitor():
+  
+  while TRUE
+    pressed = []
+    while not any(pressed):
+      pressed = hub.buttons.pressed()
+      wait(10)
+    
+    # Wait for all buttons to be released.
+    while any(hub.buttons.pressed()):
+      wait(10)
+    
+    # Increment selection number based on button pressed.
+    if Button.LEFT in pressed: # check if the left button is pressed
+        solution += -1 # If the left button was pressed, decrement the solution number by 1
+        if solution < 0 # if the solution number is less than 0, wrap the number around to the max number. This way only numbers 0 to NumberOfSolutions (initially 15) is used.
+          solution = NumberOfSolutions # Set solution number to the max number
+        hub.display.number(solution) # Display the solution number on the PrimeHub
+        pressed.clear() # clear the array storing the button press to keep everything tidy.
+    elif Button.RIGHT in pressed:
+        solution += 1
+        if solution > NumberOfSolutions
+          solution = 0
+        hub.display.number(solution)
+        pressed.clear()
+    elif Button.CENTER in pressed:
+    # If center button is pressed, run the selected mission
+      # Python switch statement syntax
+      if solution == 0: # run solution 0
+        Solution_0()
+      elif solution == 1: # run solution 1
+        Solution_1()
+      elif solution == 3: # run solution 2
+        Solution_3()
+      else :
+        #default solution, what to do if a solution number is not implemented above?
+      
+      # Add the rest of the solutions
+
+    
+    
+
+
+
+
+
+
+
+wait(3000)
