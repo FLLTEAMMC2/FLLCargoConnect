@@ -5,6 +5,8 @@ from pybricks.geometry import Axis
 from pybricks.pupdevices import Motor, ColorSensor
 from pybricks.robotics import DriveBase
 import utility
+import solution_1
+import solution_2
 
 
 # STATE 1 Initialize global variables
