@@ -23,16 +23,14 @@ solution = 0
 
 # Set bluetooth button to stop button. Check out beta.pybricks.com for some examples.
 
-# STATE 2 Start monitor loop
-# Check for button presses, increment selection number, start solution program
+# Define functions to be used globally
 
-# Start monitor function
-Monitor()
-
-# Monitor function definition
-def Monitor():
+# Monitor function definition, this is the "boot loader" - can you spot and fix the bugs below?
+# HINT: What is "hub." ?
+# Can you change the monitor function to always run first as main?
+def monitor():
   
-  while TRUE
+  while True:
     pressed = []
     while not any(pressed):
       pressed = hub.buttons.pressed()
@@ -59,11 +57,18 @@ def Monitor():
     # If center button is pressed, run the selected mission
       # Python switch statement syntax
       if solution == 0: # run solution 0
-        Solution_0()
+        solution_0() # is there a solution 0?
       elif solution == 1: # run solution 1
-        Solution_1()
-      elif solution == 3: # run solution 2
-        Solution_3()
+        solution_1()
+      elif solution == 2: # run solution 2
+        solution_3() #does this seem right to you?
         # Add the rest of the solutions
       else :
-        #default solution, what to do if a solution number is not implemented above?
+        # default solution, what to do if a solution number is not implemented above?
+
+# STATE 2 Start monitor loop
+# Check for button presses, increment selection number, start solution program
+
+# Remember that a function must always be "defined" before it can be used. So monitor() must be called after def monitor():
+# Start monitor function
+monitor()
