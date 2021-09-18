@@ -33,11 +33,38 @@ def line_follow_until_color(line_sensor_right, line_sensor_left, drive_speed, pr
         # You can wait for a short time or do other things in this loop.
         wait(10)
 
-line_follow_until_color(
-    line_sensor_right = ColorSensor(Port.F), 
-    line_sensor_left = ColorSensor(Port.E), 
-    drive_speed = 150,
-    proportional_gain = 1.2,
-    stop_color=Color.RED)
+def line_follow_until_distance(line_sensor, drive_speed, proportional_gain, distance):
+    # Calculate the light threshold. Choose values based on your measurements.
+    BLACK = 10
+    WHITE = 95
+    threshold = (BLACK + WHITE) / 2
+
+    while robot.distance() < distance:
+        #print(line_sensor.reflection(), line_sensor.color(), line_sensor.hsv())
+        # Calculate the deviation from the threshold.
+        deviation = line_sensor.reflection() - threshold
+
+        # Calculate the turn rate.
+        turn_rate = proportional_gain * deviation
+
+        # Set the drive base speed and turn rate.
+        robot.drive(drive_speed, turn_rate)
+
+        # You can wait for a short time or do other things in this loop.
+        wait(10)
+
+# Sample Function Calls        
+# line_follow_until_distance(
+#    line_sensor_right = ColorSensor(Port.F), 
+#    drive_speed = 150,
+#    proportional_gain = 1.2,
+#   distance=1500)
+#        
+# line_follow_until_color(
+#    line_sensor_right = ColorSensor(Port.F), 
+#    line_sensor_left = ColorSensor(Port.E), 
+#    drive_speed = 150,
+#    proportional_gain = 1.2,
+#    stop_color=Color.RED)
         
   
