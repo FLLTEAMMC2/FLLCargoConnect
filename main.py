@@ -15,7 +15,7 @@ import solution_2
 # STATE 1 Initialize global variables
 Robot = PrimeHub()
 leftmotor = Motor(Port.C)
-rightmoter = Motor(Port.D)
+rightmotor = Motor(Port.D)
 
 topmotor = Motor(Port.B)
 bottommotor = Motor(Port.A)
