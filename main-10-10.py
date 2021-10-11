@@ -480,7 +480,8 @@ def mission_zero():
     Freq = Freq + 5
 
 def mission_one():
-    
+    bottom_motor_mission_1.reset_angle(0)
+    bottom_motor_mission_1.run_target(80,-10) # was 80, 40
     straight_speed = 900
     robot.reset()
     robot.straight(165)
@@ -496,7 +497,6 @@ def mission_one():
     robot.straight(180)  # was 160
     robot.straight(-10)
     # trucks latched
-    bottom_motor_mission_1.reset_angle(0)
 
     bottom_motor_mission_1.run_target(80,90) # was 80, 40
     #wait_until_button()
@@ -504,9 +504,17 @@ def mission_one():
     #wait_until_button()
     #knock-down first part of bridge
 
-    robot.straight(400) 
+    robot.straight(270) # was 400
+    wait_until_button()
+    pid_line_follow(
+        sensor_to_track = "right", 
+        side_of_line = "right",
+        drive_speed = 200, 
+        critical_gain = 1, 
+        critical_period = 10, 
+        stop_color = Color.NONE)
 
-    #wait_until_button()
+    wait_until_button()
     bottom_motor_mission_1.run_target(80,90) #raises arm to clear drawbridge
     #wait_until_button()
 
