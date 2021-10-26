@@ -84,13 +84,13 @@ from pybricks.tools import wait
 bottom_motor_mission_1 = Motor(
         Port.A,
         positive_direction=Direction.CLOCKWISE, 
-        gears=[[20,12]], 
+        gears=[[12,20],[20,12]], 
         reset_angle=True)
 
 top_motor_mission_1 = Motor(
         Port.B,
         positive_direction=Direction.CLOCKWISE, 
-        gears=[[20,12]], 
+        gears=[[12,20]], 
         reset_angle=True)
 
 # left = Motor(Port.C, Direction.COUNTERCLOCKWISE)
@@ -213,6 +213,7 @@ def monitor():
         hub.light.on(Color.BLUE)
         mission_one()
         robot.stop()
+        
       elif solution == 2: # run solution 2
         #solution_2() #corresponded with 3 instead of 2
         hub.speaker.beep(frequency=500, duration=100)
@@ -241,7 +242,7 @@ def monitor():
         hub.light.blink(Color.CYAN, [500, 500])
         #wait(2000)
         hub.light.on(Color.BLUE)
-	      #run_three()
+        run_test()  
       elif solution == 6:
         hub.speaker.beep(frequency=900, duration=100)
         hub.light.blink(Color.CYAN, [500, 500])
@@ -428,128 +429,21 @@ def pid_line_follow_dist(sensor_to_track, side_of_line, drive_speed, critical_ga
         count = count +1
         #print(count, turn_rate, Error, line_sensor_right.reflection())
 
-def line_square():
-
-
-  colorScannedS3 = ColorSensor(Port.E)
-  colorScannedS2 = ColorSensor(Port.F)
-  speed = 25
-  half_ahead = 12.5
-  autoBoth = True
-  autoLeft = True
-  autoRight = True
-
-  while True:
-      if autoBoth:
-          left_motor.dc(speed)
-          right_motor.dc(speed)
-  # Left Sensor
-      if colorScannedS3.reflection() < 10 and autoBoth:
-          print("Left color found")
-          autoBoth = False
-      while autoLeft:
-          left_motor.stop()
-          if colorScannedS2.reflection() < 10:
-              autoLeft = False
-              right_motor.stop()
-      while autoRight:
-          left_motor.dc(-half_ahead)
-          if colorScannedS3.reflection() < 10:
-              autoRight = False
-              left_motor.stop()
-      while colorScannedS2.reflection() < colorScannedS3.reflection():
-          right_motor.dc(-half_ahead)
-      right_motor.stop()
-      print("S2 micro")
-      while colorScannedS3.reflection() < colorScannedS2.reflection():
-          left_motor.dc(-half_ahead)
-      left_motor.stop()
-      print("S3 micro")
-  # right Sensor
-      if colorScannedS2.reflection() < 10 and autoBoth:
-          print("Right color found")
-          autoBoth = False
-      while autoRight:
-          right_motor.stop()
-          if colorScannedS3.reflection() < 10:
-              autoRight = False
-              left_motor.stop()
-      while autoLeft:
-          right_motor.dc(-half_ahead)
-          if colorScannedS2.reflection() < 10:
-              autoLeft = False
-              right_motor.stop()
-      while colorScannedS2.reflection() < colorScannedS3.reflection():
-          right_motor.dc(-half_ahead)
-      right_motor.stop()
-      print("S2 micro")
-      while colorScannedS3.reflection() < colorScannedS2.reflection():
-        left_motor.dc(-half_ahead)
-      left_motor.stop()
-      print("S3 micro")     
-
+def run_test():
+  print("start test")
+  bottom_motor_mission_1 = Motor(
+        Port.A,
+        positive_direction=Direction.CLOCKWISE, 
+        gears=[[12,20],[20,12]], 
+        reset_angle=True)
+  bottom_motor_mission_1.reset_angle(0)
+  bottom_motor_mission_1.run_target(100,90)
+  print("end test")
 
 def module1_home():
     bottom_motor_speed = -500
     bottom_motor_mission_1.run_until_stalled(bottom_motor_speed, then=Stop.COAST, duty_limit=None)
     print("home finished")
-'''
-robot.stop()
-robot.straight(30)
-pid_line_follow(
-    sensor_to_track = "right", 
-    side_of_line = "left",
-    drive_speed = 200, 
-    critical_gain = 1, 
-    critical_period = 10, 
-    stop_color = Color.NONE)
-#pid_line_follow(23)
-robot.straight(30)
-pid_line_follow(
-    sensor_to_track = "right", 
-    side_of_line = "left",
-    drive_speed = 200, 
-    critical_gain = 1, 
-    critical_period = 10, 
-    stop_color = Color.NONE)
-robot.straight(25)
-pid_line_follow(
-    sensor_to_track = "right", 
-    side_of_line = "left",
-    drive_speed = 200, 
-    critical_gain = 1.5, 
-    critical_period = 10, 
-    stop_color = Color.NONE)
-print("end")
-#robot.brake()
-'''
-'''
-drive_speed = 200 
-critical_gain = 1
-critical_period = 10
-distance_control = 3000
-robot.straight(1000)
-#while robot.distance() <= 1000:
-   # robot.drive()
-bottom_motor_speed = 100
-top_motor_speed = 200
-top_target_angle = 90
-#bottom_motor.run(200)
-#bottom_motor.run_until_stalled(bottom_motor_speed, then=Stop.COAST, duty_limit=None)
-top_motor.run_until_stalled(top_motor_speed, then=Stop.COAST, duty_limit=None)
-#top_motor.run_target(top_motor_speed, top_target_angle, then=Stop.HOLD, wait=True)
-#top_motor.reset_angle(True)
- '''
-'''
-e = 0
-while (e != 10000):
-    e += 1
-    #print(e)
-    top_target_angle = 90*e
-    #top_motor.run_target(top_motor_speed, top_target_angle, then=Stop.HOLD, wait=True)
-    
-    bottom_motor.run, top_motor.run(200)
-'''   
 def mission_zero():
     
     wait(10)
@@ -575,41 +469,44 @@ def mission_one():
     robot.straight(-10)
     # trucks latched
 
-    bottom_motor_mission_1.run_target(80,90) #Was (80, 40)
+    bottom_motor_mission_1.run_target(160,90) #Was (80, 40)
     #wait_until_button()
-    bottom_motor_mission_1.run_target(80,45) #Goes down to pass over trucks
     #wait_until_button()
     #knock-down first part of bridge
-    pid_line_follow(
-        sensor_to_track = "right", 
-        side_of_line = "left",
-        drive_speed = 150, 
-        critical_gain = 1, 
-        critical_period = 10, 
-        stop_color = Color.NONE)
+    #robot.straight(140)
+    #pid_line_follow(sensor_to_track = "right", side_of_line = "left", drive_speed = 100, critical_gain = 1, 
+    #    critical_period = 10, stop_color = Color.NONE)
+    pid_line_follow_dist(
+      sensor_to_track = "right", 
+      side_of_line = "left",
+      drive_speed = 150, 
+      critical_gain = 1, 
+      critical_period = 10, 
+      stop_distance = 260)
+    robot.stop()
+    wait_until_button()
 
-    robot.straight(260) # was 400
-    #wait_until_button()
-    #pid_line_follow(sensor_to_track = "right", side_of_line = "right",drive_speed = 150, critical_gain = 1, critical_period = 10, stop_color = Color.NONE)
+    bottom_motor_mission_1.run_target(80,45) #Goes down to pass over trucks
+    wait_until_button()
 
-    #top_motor_mission_1.reset_angle(0)
-    #top_motor_mission_1.run_target(80,45)
+    #robot.straight(200) # was 400
+    pid_line_follow_dist(
+      sensor_to_track = "right", 
+      side_of_line = "left",
+      drive_speed = 150, 
+      critical_gain = 1, 
+      critical_period = 10, 
+      stop_distance = 200)
+    robot.stop()
+    wait_until_button()
 
-    #wait_until_button()
-    #pid_line_follow(
-    #    sensor_to_track = "right", 
-    #    side_of_line = "right",
-    #    drive_speed = 150, 
-    #    critical_gain = 1, 
-    #    critical_period = 10, 
-    #    stop_color = Color.NONE)
     bottom_motor_mission_1.run_target(80,90) #raises arm to clear drawbridge
-    #wait_until_button()
+    wait_until_button()
 
     robot.straight(130) #passes bridge
     #wait_until_button()
 
-    bottom_motor_mission_1.run_target(80,30) #lowers arm to hit bridge
+    bottom_motor_mission_1.run_target(80,45) #lowers arm to hit bridge
     #wait_until_button()
     #robot.straight(-80)
     #wait_until_button()
@@ -639,7 +536,7 @@ def mission_one():
     wait(1000)
     robot.straight(20)
     robot.turn(90) # solves mission 7 lift cargo on dock
-    wait_until_button()
+    #wait_until_button()
 
     #robot.straight(-150)
     #robot.turn(-30)
@@ -647,7 +544,7 @@ def mission_one():
     #top_motor_mission_1.reset_angle(0)
     top_motor_mission_1.run_target(100,45)
     #bottom_motor_mission_1.reset_angle(0)
-    bottom_motor_mission_1.run_target(100,45)
+    bottom_motor_mission_1.run_target(100,75)
     robot.straight(-440)
     robot.straight(20)
     robot.turn(-75)
@@ -678,31 +575,15 @@ def mission_one():
     bottom_motor_mission_1.run_target(100,45)
 
     robot.straight(-400)
-
-    
-    '''robot.straight(20)
-    bottom_motor_mission_1.run_target(80,90)
-    wait_until_button()
-    robot.straight(-330)
-    wait_until_button()
-    '''
-    
-    '''
-    robot.turn(-40)
-    robot.straight(650)
-    robot.straight(-200) 
-    top_motor_mission_1.run_target(80,0)
     robot.turn(50)
+    robot.straight(400)
+    robot.turn(40)
+    robot.straight(150)
+    pid_line_follow_dist(sensor_to_track = "left", side_of_line = "left",drive_speed = 150, critical_gain = 1, 
+          critical_period = 10, stop_distance = 1000)
+    robot.stop()      
     robot.straight(300)
-    robot.turn(15)
-    robot.straight(-100)
-    wait_until_button()
-    #bottom_motor_mission_1.run_target(80,90)
-    #robot.straight(680)
-    #robot.turn(20)
-    #robot.straight(-100)
-# all steps to hit train tracks
-'''
+    
 def mission_2():
   print("Starting Mission 2")
   print("Line follow until black")
@@ -863,7 +744,7 @@ def run_3_next():
     robot.turn(45)
     robot.straight(540)
     robot.turn(-25)
-    #wait_until_button()
+    
     pid_line_follow(
         sensor_to_track = "right", 
         side_of_line = "left",
